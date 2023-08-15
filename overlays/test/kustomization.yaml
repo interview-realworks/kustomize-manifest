@@ -1,0 +1,9 @@
+bases:
+- ../../base
+
+patchesStrategicMerge:
+- deployment-patch.yaml
+
+commonLabels:
+  env: test
+

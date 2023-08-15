@@ -1,0 +1,14 @@
+resources:
+- deployment.yaml
+- service.yaml
+- gateway.yaml
+- virtualservice.yaml
+- reloader.yaml
+
+configMapGenerator:
+- name: helloworld-configmap
+  files:
+  - message.txt
+
+commonLabels:
+  app: helloworld

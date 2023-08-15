@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+  annotations:
+    configmap.reloader.stakater.com/auto: "true" 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: helloworld-container
+        image: eljacmonidevops/helloworld-app   # A different image may be used
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: helloworld-configmap
+       
+       
+       
+      #  envFrom:
+      #  - configMapRef:
+      #      name: helloworld-configmap
+
+               

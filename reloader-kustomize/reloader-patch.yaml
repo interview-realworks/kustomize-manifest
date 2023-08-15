@@ -1,0 +1,7 @@
+# patches/reloader-patch.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reloader-reloader
+spec:
+  # Add your customizations here
