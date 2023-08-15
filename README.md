@@ -1,21 +1,22 @@
-Certainly! Here's the updated `readme.md` file for your Kubernetes manifest that uses Kustomize and Reloader as a controller:
+
 
 ```markdown
-# Hello World Kubernetes Deployment with Kustomize and Reloader
+# Hello World Python Application Deployment with Kustomize, Reloader and istio
 
-This repository contains Kubernetes manifest files for deploying a simple "Hello World" application using Kubernetes, Kustomize, and Reloader.
+This repository contains Kubernetes manifest files for deploying a simple "Hello World" Python application using Kubernetes, Kustomize, Reloader and Istio. The can be deployed multiple environments (test and prod) within the same Kubernetes cluster and namespace.
 
 ## Prerequisites
 
-Before you begin, make sure you have the following installed:
+Before you begin, it is important to ensure that you have the following installed:
 
 - [Kubernetes](https://kubernetes.io/docs/setup/)
 - [Kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/)
 - [Reloader](https://reloader.dev/docs/v0.0.0/getting-started/)
+- [Istio](https://istio.io/latest/docs/setup/getting-started/)
 
 ## Manifest Explanation
 
-This repository includes the following Kubernetes resources managed using Kustomize:
+The following Kubernetes resources will be created and managed using Kustomize, Reloader, and Istio:
 
 1. **ServiceAccount**: Defines a service account for managing permissions.
 2. **ClusterRole**: Specifies permissions to access resources.
@@ -23,30 +24,32 @@ This repository includes the following Kubernetes resources managed using Kustom
 4. **ConfigMap**: Contains a simple message to display in the application.
 5. **Service**: Exposes the application on port 80.
 6. **Deployment (Reloader)**: Deploys the `reloader` container for automatic configuration updates.
-7. **Deployment (Hello World)**: Deploys a simple "Hello World" application container.
+7. **Deployment (Hello World)**: Deploys a simple "Hello World" Python application container.
 8. **Gateway**: Defines an Istio gateway for external access.
 9. **VirtualService**: Routes incoming traffic to the service.
 
 ## How to Run
 
-1. Make sure you have a Kubernetes cluster up and running.
+1. Ensure that your Kubernetes cluster up and running.
 
-2. Install Kustomize and Reloader by following the provided links.
+2. Use the links provided below to install Kustomize, Reloader, and Istio.
 
 3. Clone this repository:
 
    ```bash
-   git clone https://github.com/yourusername/hello-world-k8s.git
-   cd hello-world-k8s
+   https://github.com/interview-realworks/kustomize-manifest.git
    ```
 
-4. Customize the deployment configuration if needed by editing the Kustomize overlays in the `kustomize` directory.
+4. The deployment configuration can be customized by editing the Kustomize overlays in the `kustomize` directory.    
+   Customization may include adjusting environment-specific settings, such as the number of replicas and image tags.
 
-5. Apply the Kustomize overlays using the following command:
+5. The Kustomize overlays for the desired environment (test or prod) can be applied using the following command:
 
    ```bash
-   kubectl apply -k kustomize
+   kubectl apply -k kustomize/overlays/<environment>
    ```
+
+   Replace `<environment>` with the name of the environment (`test` or `prod`).
 
 6. Access the application using the Istio Gateway:
 
@@ -60,12 +63,14 @@ This repository includes the following Kubernetes resources managed using Kustom
 
 7. You should see the "Hello World" message displayed on the page.
 
+8. To test the automatic configuration updates, modify the `message.txt` value in the ConfigMap. Reloader will detect the change and trigger a rolling restart of the application.
+
 ## Cleanup
 
 To remove the deployed resources, run:
 
 ```bash
-kubectl delete -k kustomize
+kubectl delete -k kustomize/overlays/<environment>
 ```
 
 ## Notes
@@ -76,4 +81,3 @@ kubectl delete -k kustomize
 
 ```
 
-Please customize this `readme.md` file further to match your specific repository structure, any additional information you want to provide, and any specific instructions for your environment or application.
